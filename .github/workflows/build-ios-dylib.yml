@@ -14,11 +14,12 @@ jobs:
           mkdir -p build
           SDK_PATH="$(xcrun --sdk iphoneos --show-sdk-path)"
           xcrun --sdk iphoneos clang \
-            -target arm64-apple-ios26.5 \
+            -target arm64-apple-ios15.0 \
             -isysroot "$SDK_PATH" \
             -fobjc-arc \
             -dynamiclib \
             -Wl,-install_name,@rpath/libCenterDot.dylib \
+            -Wl,-no_fixup_chains \
             -framework UIKit \
             -framework Foundation \
             -framework CoreGraphics \
