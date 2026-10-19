@@ -21,6 +21,7 @@ jobs:
             -Wl,-install_name,@rpath/libCenterDot.dylib \
             -framework UIKit \
             -framework Foundation \
+            -framework CoreGraphics \
             CenterDotTweak.m \
             -o build/libCenterDot.dylib
       - uses: actions/upload-artifact@v4
