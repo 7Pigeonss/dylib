@@ -3,13 +3,18 @@ import UIKit
 public final class CenterDotView: UIView {
     public override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .clear
-        isUserInteractionEnabled = false
-        isOpaque = false
+        configure()
     }
 
     public required init?(coder: NSCoder) {
-        fatalError("init(coder:) is unsupported")
+        super.init(coder: coder)
+        configure()
+    }
+
+    private func configure() {
+        backgroundColor = .clear
+        isUserInteractionEnabled = false
+        isOpaque = false
     }
 
     public override func draw(_ rect: CGRect) {
