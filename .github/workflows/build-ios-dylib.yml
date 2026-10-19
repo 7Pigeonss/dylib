@@ -20,6 +20,8 @@ jobs:
             -emit-module \
             -module-name CenterDot \
             -emit-module-path build/CenterDot.swiftmodule \
+            -Xlinker -install_name \
+            -Xlinker '@rpath/libCenterDot.dylib' \
             CenterDotView.swift \
             -o build/libCenterDot.dylib
       - uses: actions/upload-artifact@v4
