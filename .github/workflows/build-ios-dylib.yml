@@ -9,24 +9,21 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Build arm64 iOS dylib
+      - name: Build arm64 iOS tweak dylib
         run: |
           mkdir -p build
           SDK_PATH="$(xcrun --sdk iphoneos --show-sdk-path)"
-          xcrun --sdk iphoneos swiftc \
+          xcrun --sdk iphoneos clang \
             -target arm64-apple-ios26.5 \
-            -sdk "$SDK_PATH" \
-            -emit-library \
-            -emit-module \
-            -module-name CenterDot \
-            -emit-module-path build/CenterDot.swiftmodule \
-            -Xlinker -install_name \
-            -Xlinker '@rpath/libCenterDot.dylib' \
-            CenterDotView.swift \
+            -isysroot "$SDK_PATH" \
+            -fobjc-arc \
+            -dynamiclib \
+            -Wl,-install_name,@rpath/libCenterDot.dylib \
+            -framework UIKit \
+            -framework Foundation \
+            CenterDotTweak.m \
             -o build/libCenterDot.dylib
       - uses: actions/upload-artifact@v4
         with:
           name: CenterDot-iOS-arm64
-          path: |
-            build/libCenterDot.dylib
-            build/CenterDot.swiftmodule
+          path: build/libCenterDot.dylib
